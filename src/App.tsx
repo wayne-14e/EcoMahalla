@@ -4,7 +4,6 @@ import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { ProblemSolutionSection } from './components/ProblemSolutionSection';
 import { TeamSection } from './components/TeamSection';
-import { WhyUsSection } from './components/WhyUsSection';
 import { RoadmapSection } from './components/RoadmapSection';
 import { TechPlanSection } from './components/TechPlanSection';
 import { DemoPage } from './components/DemoSuite/DemoPage';
@@ -23,10 +22,8 @@ export default function App() {
         setActiveTab('demo');
       } else if (hash === '#problem-solution') {
         setActiveTab('problem-solution');
-      } else if (hash === '#team') {
+      } else if (hash === '#team' || hash === '#why-us') {
         setActiveTab('team');
-      } else if (hash === '#why-us') {
-        setActiveTab('why-us');
       } else if (hash === '#roadmap') {
         setActiveTab('roadmap');
       } else if (hash === '#tech-plan') {
@@ -88,7 +85,6 @@ export default function App() {
             <HeroSection lang={lang} onNavigate={handleSelectTab} />
             <ProblemSolutionSection lang={lang} />
             <TeamSection lang={lang} />
-            <WhyUsSection lang={lang} />
             <RoadmapSection lang={lang} />
             <TechPlanSection lang={lang} />
 

@@ -18,7 +18,7 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({ lang }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-12">
           <p className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">
-            {isUz ? '04. Rivojlanish Bosqichlari' : '04. Strategic Roadmap'}
+            {isUz ? '03. Rivojlanish Bosqichlari' : '03. Strategic Roadmap'}
           </p>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             {isUz ? 'Yo‘l xaritasi: Idea → Prototype → MVP → Launched' : 'Milestone Roadmap: Idea / Prototype / MVP / Launched'}

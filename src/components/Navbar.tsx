@@ -63,17 +63,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           <button
-            onClick={() => onSelectTab('why-us')}
-            className={`whitespace-nowrap transition-colors cursor-pointer py-1 ${
-              activeTab === 'why-us'
-                ? 'text-emerald-700 font-semibold'
-                : 'hover:text-slate-900'
-            }`}
-          >
-            {lang === 'uz' ? 'Nega Sardor?' : 'Why Sardor?'}
-          </button>
-
-          <button
             onClick={() => onSelectTab('roadmap')}
             className={`whitespace-nowrap transition-colors cursor-pointer py-1 ${
               activeTab === 'roadmap'
@@ -164,18 +153,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           <button
-            onClick={() => handleMobileNav('why-us')}
-            className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center justify-between ${
-              activeTab === 'why-us'
-                ? 'bg-emerald-50 text-emerald-800'
-                : 'text-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            <span>{lang === 'uz' ? '03. Nega Aynan Sardor?' : '03. Why Sardor Omonov?'}</span>
-            <ArrowRight className="w-4 h-4 text-slate-400" />
-          </button>
-
-          <button
             onClick={() => handleMobileNav('roadmap')}
             className={`w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center justify-between ${
               activeTab === 'roadmap'
@@ -183,7 +160,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'text-slate-700 hover:bg-slate-50'
             }`}
           >
-            <span>{lang === 'uz' ? '04. Yo‘l Xaritasi (Idea → Launched)' : '04. Roadmap (Idea → Launched)'}</span>
+            <span>{lang === 'uz' ? '03. Yo‘l Xaritasi (Idea → Launched)' : '03. Roadmap (Idea → Launched)'}</span>
             <ArrowRight className="w-4 h-4 text-slate-400" />
           </button>
 
@@ -195,7 +172,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'text-slate-700 hover:bg-slate-50'
             }`}
           >
-            <span>{lang === 'uz' ? '05. Texnologiyalar & Reja' : '05. Execution & Tech Stack'}</span>
+            <span>{lang === 'uz' ? '04. Texnologiyalar & Reja' : '04. Execution & Tech Stack'}</span>
             <ArrowRight className="w-4 h-4 text-slate-400" />
           </button>
 

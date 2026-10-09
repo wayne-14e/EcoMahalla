@@ -41,10 +41,6 @@ export const Footer: React.FC<FooterProps> = ({ lang, onSelectTab }) => {
               {isUz ? 'Asoschi & Tajriba' : 'Founder & Skills'}
             </button>
             <span aria-hidden="true" className="text-slate-700">·</span>
-            <button onClick={() => onSelectTab('why-us')} className="hover:text-white transition-colors cursor-pointer">
-              {isUz ? 'Nega Sardor?' : 'Why Sardor?'}
-            </button>
-            <span aria-hidden="true" className="text-slate-700">·</span>
             <button onClick={() => onSelectTab('roadmap')} className="hover:text-white transition-colors cursor-pointer">
               {isUz ? 'Yo‘l Xaritasi' : 'Roadmap'}
             </button>

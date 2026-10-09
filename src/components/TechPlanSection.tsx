@@ -78,7 +78,7 @@ export const TechPlanSection: React.FC<TechPlanSectionProps> = ({ lang }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mb-12">
           <p className="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-2">
-            {isUz ? '05. Texnologik Arxitektura va Amalga Oshirish' : '05. Execution Strategy & Tech Stack'}
+            {isUz ? '04. Texnologik Arxitektura va Amalga Oshirish' : '04. Execution Strategy & Tech Stack'}
           </p>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
             {isUz

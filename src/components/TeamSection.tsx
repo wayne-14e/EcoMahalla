@@ -1,7 +1,7 @@
 import React from 'react';
 import { Language } from '../types';
 import { TEAM_MEMBERS, SARDOR_PORTRAIT, SHIPPED_PROJECTS } from '../data/content';
-import { Github, Linkedin, ExternalLink, Code2, Award, Sparkles, CheckCircle2, Terminal, Layers, Database } from 'lucide-react';
+import { Github, Linkedin, ExternalLink, Code2, Award, Sparkles, CheckCircle2, Terminal, Layers, Database, Flame, Check } from 'lucide-react';
 
 interface TeamSectionProps {
   lang: Language;
@@ -213,6 +213,40 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ lang }) => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* The Solo Builder Advantage & Validation (Merged into Founder & Skills) */}
+          <div className="mt-8 rounded-2xl border border-emerald-900/40 bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 text-white p-6 sm:p-8 shadow-sm">
+            <div className="max-w-4xl space-y-4">
+              <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2">
+                <Flame className="w-5 h-5 text-amber-400" />
+                <span>{isUz ? 'Yakkaxon Yaratuvchining Amaliy Kafolati' : 'The Solo Builder Advantage & Validation'}</span>
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {(isUz
+                  ? [
+                      'Sardor Omonov tomonidan LMS, CMS va lug‘at o‘rganish platformalari mustaqil arxitektura qilingan va ishga tushirilgan',
+                      'Recognized NexFellow Builder sifatida tan olingan va ilg‘or vositalar (Google AI Studio, Opencode CLI + Firebase MCP) bilan qurollangan',
+                      'Toshkent shahrining 4 ta sinov tumanida (Chilonzor, Yunusobod, Mirzo Ulug‘bek, Yakkasaroy) real jadvallar raqamlashtirildi',
+                      'Figma UI/UX, Python, Supabase, Firebase va oflayn kesh texnologiyalarining yagona muhandis qo‘lida to‘liq birlashuvi',
+                    ]
+                  : [
+                      'Independently built and deployed real production LMS, CMS, and web vocabulary learning platforms',
+                      'Recognized NexFellow Builder leveraging Google AI Studio, Opencode CLI + Firebase MCP, and modern builder tooling',
+                      'Digitized operational pickup schedules across 4 major pilot districts in Tashkent with zero delay',
+                      'Seamless integration of Figma UI/UX, Python, Supabase, Firebase, and offline-first mobile web architecture',
+                    ]
+                ).map((pt, pIdx) => (
+                  <div key={pIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-emerald-100">
+                    <div className="w-4 h-4 rounded-full bg-emerald-700 flex items-center justify-center shrink-0 mt-0.5 text-white">
+                      <Check className="w-3 h-3" />
+                    </div>
+                    <span>{pt}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
