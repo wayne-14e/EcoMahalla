@@ -828,8 +828,8 @@ export const InteractivePrototype: React.FC<InteractivePrototypeProps> = ({ lang
               );
             })()}
 
-            {/* 7-Day Schedule Cards: Bigger, high-contrast, NO text truncation */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7 gap-3">
+            {/* 7-Day Schedule Cards: 3 big, spacious cards per row on desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
               {currentDistrict.schedule.map((item, idx) => {
                 const isToday = idx === realDayIndex;
                 const isTomorrow = idx === tomorrowIndex;
@@ -837,7 +837,7 @@ export const InteractivePrototype: React.FC<InteractivePrototypeProps> = ({ lang
                 return (
                   <div
                     key={idx}
-                    className={`p-3.5 sm:p-4 rounded-2xl border flex flex-col justify-between transition-all min-h-[160px] ${
+                    className={`p-4 sm:p-4.5 rounded-2xl border flex flex-col justify-between transition-all min-h-[170px] ${
                       isToday
                         ? 'border-emerald-600 bg-emerald-50/90 ring-2 ring-emerald-500/50 shadow-md'
                         : isTomorrow
@@ -846,23 +846,23 @@ export const InteractivePrototype: React.FC<InteractivePrototypeProps> = ({ lang
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs sm:text-[13px] font-bold text-slate-900">
+                      <div className="flex items-center justify-between mb-2.5 gap-2">
+                        <span className="text-sm font-bold text-slate-900 truncate">
                           {item.day}
                         </span>
                         {isToday && (
-                          <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-emerald-600 text-white shrink-0 shadow-2xs animate-pulse">
+                          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-emerald-600 text-white shrink-0 shadow-2xs animate-pulse">
                             {isUz ? 'Bugun' : 'Today'}
                           </span>
                         )}
                         {isTomorrow && (
-                          <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-blue-600 text-white shrink-0 shadow-2xs">
+                          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-blue-600 text-white shrink-0 shadow-2xs">
                             {isUz ? 'Ertaga' : 'Next'}
                           </span>
                         )}
                       </div>
 
-                      <div className="mb-2">
+                      <div className="mb-2.5">
                         <span
                           className={`inline-block text-[11px] font-mono font-bold px-2 py-0.5 rounded border ${getBinBadge(
                             item.binColor
@@ -872,14 +872,17 @@ export const InteractivePrototype: React.FC<InteractivePrototypeProps> = ({ lang
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-700 font-medium leading-snug">
+                      <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">
                         {isUz ? item.typeUz : item.typeEn}
                       </p>
                     </div>
 
-                    <div className="mt-3 pt-2 border-t border-slate-100 text-[10px] text-slate-400 font-mono flex items-center justify-between">
-                      <Clock className="w-3 h-3 text-slate-400" />
-                      <span>{currentDistrict.collectionTime}</span>
+                    <div className="mt-3.5 pt-2.5 border-t border-slate-100 text-[11px] text-slate-400 font-mono flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 text-slate-500">
+                        <Clock className="w-3.5 h-3.5 text-slate-400" />
+                        <span>{currentDistrict.collectionTime}</span>
+                      </div>
+                      <span className="text-[10px] text-slate-400 font-sans">{isUz ? 'Kunlik grafik' : 'Daily slot'}</span>
                     </div>
                   </div>
                 );
