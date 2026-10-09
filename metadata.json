@@ -1,0 +1,6 @@
+{
+  "name": "EcoMahalla - Hyperlocal Civic & Waste Recycling Scheduler",
+  "description": "Hyperlocal recycling and municipal waste collection scheduler startup demo for Tashkent and global municipalities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
