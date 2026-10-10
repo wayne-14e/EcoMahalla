@@ -272,7 +272,7 @@ export const AIChatbot: React.FC<AIChatbotProps> = ({ lang }) => {
               <Bot className="w-4 h-4" />
             </div>
             <div className="p-3 bg-white border border-slate-200 rounded-xl rounded-tl-none flex items-center gap-2 shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-spin" />
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
               <span>{isUz ? 'Gemini AI tahlil qilmoqda...' : 'EcoMahalla AI is thinking...'}</span>
             </div>
           </div>

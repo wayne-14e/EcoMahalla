@@ -566,7 +566,7 @@ export const InteractivePrototype: React.FC<InteractivePrototypeProps> = ({ lang
             disabled={geoLocating}
             className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition-all shadow-sm hover:shadow-md cursor-pointer disabled:opacity-50 shrink-0"
           >
-            <Navigation className={`w-4 h-4 ${geoLocating ? 'animate-spin' : ''}`} />
+            <Navigation className="w-4 h-4" />
             <span>
               {geoLocating
                 ? (isUz ? 'GPS aniqlanmoqda...' : 'Locating GPS...')
