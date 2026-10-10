@@ -1,7 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Language } from '../../types';
-import { VIDEO_THUMBNAIL, VIDEO_CHAPTERS, MOBILE_MOCKUP } from '../../data/content';
-import { Play, Pause, RotateCcw, Volume2, VolumeX, Maximize2, ExternalLink, ArrowRight, CheckCircle2 } from 'lucide-react';
+import demoVideo from '../../assets/eco-mahalla-demo.mp4';
+import {
+  Smartphone,
+  Clock,
+  ArrowRight,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles,
+  TrendingUp,
+  MapPin,
+  FileText
+} from 'lucide-react';
 
 interface VideoPitchProps {
   lang: Language;
@@ -10,271 +20,158 @@ interface VideoPitchProps {
 
 export const VideoPitch: React.FC<VideoPitchProps> = ({ lang, onGoToPrototype }) => {
   const isUz = lang === 'uz';
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const [isMuted, setIsMuted] = useState<boolean>(false);
-  const [activeChapterIndex, setActiveChapterIndex] = useState<number>(0);
-
-  const totalDuration = 285; // 4 minutes 45 seconds
-
-  // Simulated video playback timer
-  useEffect(() => {
-    let interval: any;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setCurrentTime((prev) => {
-          if (prev >= totalDuration) {
-            setIsPlaying(false);
-            return totalDuration;
-          }
-          return prev + 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying]);
-
-  // Update chapter based on time
-  useEffect(() => {
-    if (currentTime >= 210) {
-      setActiveChapterIndex(3);
-    } else if (currentTime >= 135) {
-      setActiveChapterIndex(2);
-    } else if (currentTime >= 70) {
-      setActiveChapterIndex(1);
-    } else {
-      setActiveChapterIndex(0);
-    }
-  }, [currentTime]);
-
-  const formatSeconds = (sec: number) => {
-    const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60);
-    return `${m}:${s < 10 ? '0' : ''}${s}`;
-  };
-
-  const jumpToChapter = (chapterIdx: number) => {
-    const times = [0, 70, 135, 210];
-    setCurrentTime(times[chapterIdx]);
-    setActiveChapterIndex(chapterIdx);
-    setIsPlaying(true);
-  };
-
-  const currentChapter = VIDEO_CHAPTERS[activeChapterIndex] || VIDEO_CHAPTERS[0];
 
   return (
-    <div className="space-y-8">
-      {/* 6.1: Video Player Container */}
-      <div className="rounded-2xl border border-slate-200 bg-slate-950 overflow-hidden shadow-xl text-white">
-        {/* Video Canvas Simulation */}
-        <div className="relative aspect-video w-full bg-slate-900 flex items-center justify-center overflow-hidden group">
-          <img
-            src={VIDEO_THUMBNAIL}
-            alt="EcoMahalla Demo Video Presentation"
-            referrerPolicy="no-referrer"
-            className={`w-full h-full object-cover transition-opacity duration-300 ${
-              isPlaying ? 'opacity-70' : 'opacity-90'
-            }`}
-          />
-
-          {/* Active Overlay Content when playing or paused */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex flex-col justify-between p-6">
-            <div className="flex items-center justify-between">
-              <span className="px-3 py-1 rounded-md bg-emerald-600/90 text-white text-xs font-bold tracking-wide uppercase">
-                {isUz ? 'Demo-Video (1–5 daqiqa)' : 'Demo Video Pitch'}
-              </span>
-
-              <span className="text-xs font-mono bg-black/60 px-2.5 py-1 rounded text-slate-300">
-                {formatSeconds(currentTime)} / {formatSeconds(totalDuration)}
-              </span>
-            </div>
-
-            {/* Subtitle / Talking Points overlay */}
-            <div className="bg-slate-950/80 backdrop-blur-md p-4 rounded-xl border border-white/10 max-w-2xl">
-              <p className="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">
-                {isUz ? `Bo‘lim ${activeChapterIndex + 1}: ${currentChapter.titleUz}` : `Chapter ${activeChapterIndex + 1}: ${currentChapter.titleEn}`}
-              </p>
-              <p className="text-sm sm:text-base text-slate-100 font-medium">
-                {isUz ? currentChapter.descUz : currentChapter.descEn}
-              </p>
-            </div>
-          </div>
-
-          {/* Centered Play/Pause Button overlay */}
-          {!isPlaying && (
-            <button
-              onClick={() => setIsPlaying(true)}
-              className="absolute w-20 h-20 rounded-full bg-emerald-600/95 hover:bg-emerald-500 text-white flex items-center justify-center shadow-2xl transition-transform hover:scale-110 cursor-pointer z-10"
-              title="Play Video"
-            >
-              <Play className="w-9 h-9 ml-1 fill-white" />
-            </button>
-          )}
-        </div>
-
-        {/* Video Controls Bar */}
-        <div className="p-4 bg-slate-900 border-t border-slate-800 space-y-3">
-          {/* Scrubber Timeline */}
-          <div className="relative w-full h-2 bg-slate-800 rounded-full overflow-hidden cursor-pointer">
-            <div
-              className="h-full bg-emerald-500 rounded-full transition-all"
-              style={{ width: `${(currentTime / totalDuration) * 100}%` }}
-            />
-          </div>
-
-          <div className="flex items-center justify-between text-xs sm:text-sm text-slate-300">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="p-1.5 hover:text-white transition-colors cursor-pointer"
-                title={isPlaying ? 'Pause' : 'Play'}
-              >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
-              </button>
-
-              <button
-                onClick={() => {
-                  setCurrentTime(0);
-                  setIsPlaying(false);
-                }}
-                className="p-1.5 hover:text-white transition-colors cursor-pointer"
-                title="Restart"
-              >
-                <RotateCcw className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => setIsMuted(!isMuted)}
-                className="p-1.5 hover:text-white transition-colors cursor-pointer"
-                title={isMuted ? 'Unmute' : 'Mute'}
-              >
-                {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-
-              <span className="font-mono text-xs tabular-nums text-slate-400">
-                {formatSeconds(currentTime)} / {formatSeconds(totalDuration)}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400 hidden sm:inline">
-                {isUz ? 'HD 1080p · O‘zbekcha & English' : 'HD 1080p · Pitch Deck'}
-              </span>
-              <button className="p-1.5 hover:text-white transition-colors cursor-pointer" title="Fullscreen">
-                <Maximize2 className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Chapters Selector Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {VIDEO_CHAPTERS.map((ch, idx) => (
-          <button
-            key={idx}
-            onClick={() => jumpToChapter(idx)}
-            className={`p-3 rounded-xl border text-left text-xs transition-all cursor-pointer ${
-              activeChapterIndex === idx
-                ? 'border-emerald-600 bg-emerald-50 text-emerald-950 font-bold shadow-sm'
-                : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
-            }`}
-          >
-            <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono mb-1">
-              <span>{ch.time}</span>
-              {activeChapterIndex === idx && <span className="text-emerald-700 font-bold">● Jonli</span>}
-            </div>
-            <p className="line-clamp-2">{isUz ? ch.titleUz : ch.titleEn}</p>
-          </button>
-        ))}
-      </div>
-
-      {/* 6.2 & 6.3: Video Description and Direct Prototype Launch */}
+    <div className="space-y-6">
+      {/* Main 2-Column Layout: Video on the left (more space), Description + Prototype on the right */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* 6.2: Demo Video Description */}
-        <div className="lg:col-span-8 p-6 sm:p-8 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-4">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">
-              {isUz ? 'Demo-Videoning Tavsifi' : 'Demo Video Pitch Description'}
-            </span>
-            <span className="text-xs text-slate-400 font-mono">Davomiyligi: 4 daqiqa 45 soniya</span>
-          </div>
+        
+        {/* LEFT COLUMN: Vertical Mobile Video Player (Given more space) */}
+        <div className="lg:col-span-7 xl:col-span-7 flex flex-col items-center">
+          <div className="w-full max-w-[420px] rounded-3xl border-4 border-slate-900 bg-black shadow-2xl overflow-hidden relative">
+            {/* Phone Notch / Header indicator */}
+            <div className="bg-slate-900 text-slate-400 px-4 py-2 flex items-center justify-between text-xs border-b border-slate-800">
+              <div className="flex items-center gap-1.5 font-medium">
+                <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-[11px] text-slate-300">EcoMahalla Mobile Demo</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="font-mono text-[10px] text-emerald-400 font-bold">~2.5 MIN</span>
+              </div>
+            </div>
 
-          <h3 className="text-xl font-bold text-slate-900">
-            {isUz
-              ? 'Toshkent mahallalari uchun giperlokal chiqindi saralash platformasi'
-              : 'Hyperlocal Recycling & Collection Architecture Pitch'}
-          </h3>
+            {/* Native HTML5 Video Player */}
+            <div className="relative aspect-[9/16] w-full bg-black flex items-center justify-center">
+              <video
+                src={demoVideo}
+                controls
+                playsInline
+                preload="metadata"
+                className="w-full h-full object-contain bg-black"
+              >
+                {isUz
+                  ? "Brauzeringiz video formatini qo'llab-quvvatlamaydi."
+                  : 'Your browser does not support the video tag.'}
+              </video>
+            </div>
 
-          <p className="text-sm text-slate-600 leading-relaxed">
-            {isUz
-              ? 'Ushbu videoda EcoMahalla startapining asosiy muammosi, mavjud shahar infratuzilmasidagi uzilishlar va ularni bartaraf etuvchi 4 ta innovatsion xususiyat ko‘rsatib berilgan: oflayn rejim, ranglar bilan kodlangan saralash katalogi, kechki push-eslatmalar va tuman dispetcheriga to‘g‘ridan-to‘g‘ri murojaat yuborish mexanizmi.'
-              : 'This 4.5-minute video pitch details the core problem of municipal waste fragmentation, validates the unmet demand across 680+ resident reviews, walks through the live mobile prototype, and articulates our $2 ARPU unit economics.'}
-          </p>
-
-          <div className="space-y-2 pt-2 border-t border-slate-100 text-xs sm:text-sm text-slate-700">
-            <h4 className="font-bold text-slate-900">
-              {isUz ? 'Video taqdimotining asosiy tezislari:' : 'Key Takeaways from the Pitch:'}
-            </h4>
-            <ul className="space-y-1.5 list-disc list-inside text-slate-600">
-              <li>
-                <strong>0:00 - 1:10:</strong>{' '}
+            {/* Bottom player caption */}
+            <div className="bg-slate-950 px-4 py-2.5 text-center border-t border-slate-800/80">
+              <p className="text-[11px] text-slate-400">
                 {isUz
-                  ? 'Muammo chuqurligi: 680+ fuqaro sharhlari va noto‘g‘ri sanalar tufayli o‘tkazib yuborilgan chiqindilar.'
-                  : 'Validating the problem: 680+ resident complaints regarding shifted schedules.'}
-              </li>
-              <li>
-                <strong>1:10 - 2:15:</strong>{' '}
-                {isUz
-                  ? 'EcoMahalla texnik yondashuvi: internet bo‘lmaganda ham ochiladigan oflayn kesh.'
-                  : 'Offline-first resilience: local schedule cache accessible during cell dropouts.'}
-              </li>
-              <li>
-                <strong>2:15 - 3:30:</strong>{' '}
-                {isUz
-                  ? 'Ilova interfeysi: 1 ta bosishda ertangi kun jadvali va rangli idishlar qo‘llanmasi.'
-                  : 'Mobile interface walkthrough: 1-tap lookup and waste categorization.'}
-              </li>
-              <li>
-                <strong>3:30 - 4:45:</strong>{' '}
-                {isUz
-                  ? 'Biznes model: $2 ARPU bilan 50,000 foydalanuvchida $100,000 yillik daromad va shahar hokimiyatlari uchun B2G xizmatlar.'
-                  : 'Business model & unit economics: Freemium model targeting $2 ARPU.'}
-              </li>
-            </ul>
+                  ? '📱 Haqiqiy mobil ekranda yozib olingan demo video (2:30)'
+                  : '📱 Screen recording from live mobile device (2:30)'}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Ishlayotgan Prototipga O'tish Blok */}
-        <div className="lg:col-span-4 p-6 rounded-2xl border border-emerald-200 bg-emerald-50/70 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs uppercase tracking-wider">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-            <span>{isUz ? 'Ishlayotgan Prototip' : 'Working Prototype'}</span>
+        {/* RIGHT COLUMN: Short Pitch Description + Launch Prototype Block */}
+        <div className="lg:col-span-5 xl:col-span-5 flex flex-col gap-6">
+          
+          {/* Pitch Script Summary (Short & Focused) */}
+          <div className="p-6 sm:p-7 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-5">
+            <div className="flex items-center justify-between">
+              <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold uppercase tracking-wider">
+                {isUz ? 'Startap Taqdimoti' : 'Startup Pitch Script'}
+              </span>
+              <div className="flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                <Clock className="w-3.5 h-3.5 text-slate-400" />
+                <span>2.5 daqiqa</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                {isUz
+                  ? 'EcoMahalla: Shahar Chiqindi Tartibsizligiga Giperlokal Yechim'
+                  : 'EcoMahalla: Hyperlocal Civic Waste Platform'}
+              </h3>
+              <p className="text-xs text-slate-500 mt-1">
+                {isUz
+                  ? 'Ekran ulashib (screen-share) taqdimot qilish uchun qisqa va aniq ssenariy'
+                  : 'Concise 3-minute screen-share pitch structure'}
+              </p>
+            </div>
+
+            {/* Script Breakdown Points */}
+            <div className="space-y-3.5 text-xs sm:text-sm">
+              {/* 1. Muammo */}
+              <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/80 space-y-1">
+                <div className="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase tracking-wide">
+                  <AlertCircle className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
+                  <span>{isUz ? '1. Muammo (0:00 – 0:45)' : '1. Problem (0:00 – 0:45)'}</span>
+                </div>
+                <p className="text-xs text-amber-950/90 leading-relaxed">
+                  {isUz
+                    ? 'Toshkentda millionlab fuqarolar mashina kelish kunini bilmaydi. Chiqindi kunlab ko‘chada qolib ketadi, jadval kechikadi va qayta ishlash darajasi 5% dan oshmaydi.'
+                    : 'Millions of urban residents face schedule uncertainty. Missed collections create roadside bottlenecks, while less than 5% of household waste gets segregated.'}
+                </p>
+              </div>
+
+              {/* 2. Yechim va Prototip */}
+              <div className="p-3.5 rounded-xl bg-emerald-50/80 border border-emerald-200/80 space-y-1">
+                <div className="flex items-center gap-2 text-emerald-900 font-bold text-xs uppercase tracking-wide">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                  <span>{isUz ? '2. Yechim & Jonli Demo (0:45 – 2:00)' : '2. Solution & Demo (0:45 – 2:00)'}</span>
+                </div>
+                <p className="text-xs text-emerald-950/90 leading-relaxed">
+                  {isUz
+                    ? '12 ta tuman bo‘yicha 0ms oflayn 7 kunlik jadval, real-vaqt kuni (Bugun/Ertaga), Gemini AI saralash maslahatchisi va 1-bosishda dispetcherga murojaat qilish mexanizmi.'
+                    : 'Instant 0ms offline 7-day mahalla schedule, real calendar day tracking, Gemini AI waste sorting assistant, and 1-tap citizen dispatch reporting.'}
+                </p>
+              </div>
+
+              {/* 3. Biznes va Miqyos */}
+              <div className="p-3.5 rounded-xl bg-sky-50/80 border border-sky-200/80 space-y-1">
+                <div className="flex items-center gap-2 text-sky-900 font-bold text-xs uppercase tracking-wide">
+                  <TrendingUp className="w-3.5 h-3.5 text-sky-600 flex-shrink-0" />
+                  <span>{isUz ? '3. Miqyos & Ta’sir (2:00 – 2:30)' : '3. Scale & Impact (2:00 – 2:30)'}</span>
+                </div>
+                <p className="text-xs text-sky-950/90 leading-relaxed">
+                  {isUz
+                    ? 'Toshkentning 584 ta mahallasini qamrab olish, shahar kommunal xizmatlari uchun ochiq API va toza yashil shahar infratuzilmasi.'
+                    : 'Ready to scale across 584 Tashkent mahallas with open municipal APIs for dispatchers and route optimization.'}
+                </p>
+              </div>
+            </div>
           </div>
 
-          <h4 className="text-base font-bold text-slate-900">
-            {isUz ? 'To‘g‘ridan-to‘g‘ri vebda sinab ko‘ring' : 'Test the Live Prototype Directly'}
-          </h4>
+          {/* Launch Working Prototype Block (Right below the short description) */}
+          <div className="p-6 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50/60 shadow-sm space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-emerald-800 font-bold text-xs uppercase tracking-wider">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>{isUz ? 'Jonli Prototip' : 'Live Working Prototype'}</span>
+              </div>
+              <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                v1.2-live
+              </span>
+            </div>
 
-          <p className="text-xs text-slate-600 leading-relaxed">
-            {isUz
-              ? 'Toshkentning barcha 12 ta tumani bo‘yicha real jadvalni tekshiring, avtomatik GPS joylashuvni aniqlang, chiqindilarni saralang va sinov murojaati yuboring.'
-              : 'Inspect live schedules across all 12 Tashkent districts, detect live GPS location, filter waste sorting guides, and submit a test delay report.'}
-          </p>
+            <div>
+              <h4 className="text-base font-bold text-slate-900">
+                {isUz ? 'To‘g‘ridan-to‘g‘ri vebda sinab ko‘ring' : 'Test the Prototype Directly'}
+              </h4>
+              <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                {isUz
+                  ? 'Toshkentning barcha 12 ta tumani jadvallari, avtomatik GPS joylashuv, AI yordamchi va fuqaro dispetcher murojaatini o‘zingiz tekshiring.'
+                  : 'Check all 12 districts, live day detection, auto-detect location, AI recycling advisor, and citizen dispatch reporting.'}
+              </p>
+            </div>
 
-          <button
-            onClick={onGoToPrototype}
-            className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
-          >
-            <span>{isUz ? 'Ishlayotgan Prototipni Ochish' : 'Launch Working Prototype'}</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
-
-          <div className="pt-2 border-t border-emerald-200/60 text-[11px] text-emerald-800 flex items-center justify-between">
-            <span>{isUz ? 'Mavqei: 12 ta tuman qamrovi' : 'Status: 12 Districts Active'}</span>
-            <span className="font-mono">v1.2-live</span>
+            <button
+              onClick={onGoToPrototype}
+              className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer group hover:shadow-lg"
+            >
+              <span>{isUz ? 'Ishlayotgan Prototipni Ochish' : 'Launch Working Prototype'}</span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </button>
           </div>
+
         </div>
+
       </div>
     </div>
   );
